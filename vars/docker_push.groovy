@@ -1,5 +1,5 @@
 
-def call( String image , String username , String password ){
+def call( String image ){
   echo "This is pushing the image to DockerHub"
   withCredentials([
       usernamePassword(
@@ -9,8 +9,8 @@ def call( String image , String username , String password ){
       )
   ])
   {
-      sh "docker login -u ${username} -p ${password}"
-      sh "docker image tag ${image} ${username}/${image}"
-      sh "docker push ${username}/${image}"
+      sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+      sh "docker image tag ${image} ${env.dockerHubUser}/${image}"
+      sh "docker push  ${env.dockerHubUser}/${image}"
   }
 }
